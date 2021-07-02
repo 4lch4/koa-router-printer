@@ -1,18 +1,24 @@
 import Table from 'cli-table3'
 import Koa from 'koa'
-import { IRouter, PathInfo } from './interfaces'
+import { AppOpts, IRouter, IStack, PathInfo } from './interfaces'
 
-export interface IAppOpts {
+const AppDefaults: AppOpts = {
+  displayHead: false,
   displayPrefix: true
 }
 
 class Processor {
-  private opts: IAppOpts
+  private opts: AppOpts
   private app: Koa
 
-  constructor(app: Koa, opts?: IAppOpts) {
-    this.opts = opts || { displayPrefix: true }
+  constructor(app: Koa, opts?: AppOpts) {
+    this.opts = opts || AppDefaults
     this.app = app
+  }
+
+  private getRouteMethods(route: IStack) {
+    if (this.opts.displayHead) return route.methods
+    else return route.methods.filter(val => val !== 'HEAD')
   }
 
   getRoutesInfo(middleware: IRouter) {
@@ -23,12 +29,13 @@ class Processor {
       if (this.opts.displayPrefix) {
         routesInfo.push({
           path: member.path,
-          methods: member.methods
+          methods: this.getRouteMethods(member)
         })
       } else {
         routesInfo.push({
           path: member.path.substring(prefix.length),
-          methods: member.methods
+          methods: this.getRouteMethods(member)
+          
         })
       }
     }
@@ -47,7 +54,7 @@ class Processor {
   }
 }
 
-function printRoutes(app: Koa, opts?: IAppOpts) {
+function printRoutes(app: Koa, opts?: AppOpts) {
   const processor = new Processor(app, opts)
   const middleware = processor.getRouterMiddleware()
   if (middleware) {

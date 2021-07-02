@@ -5,7 +5,7 @@ export interface IRouter {
   stack: IStack[]
 }
 
-interface IStack {
+export interface IStack {
   opts: string
   name?: any
   methods: string[]
