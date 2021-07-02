@@ -47,7 +47,7 @@ class Processor {
   }
 }
 
-function printRoutes(app: Koa, opts: IAppOpts) {
+function printRoutes(app: Koa, opts?: IAppOpts) {
   const processor = new Processor(app, opts)
   const middleware = processor.getRouterMiddleware()
   if (middleware) {
