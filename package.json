@@ -3,6 +3,12 @@
   "version": "0.0.4",
   "description": "A Koa middleware that outputs the routes registered to the application.",
   "main": "dist/index.js",
+  "author": {
+    "name": "4lch4",
+    "email": "hey@4lch4.email",
+    "url": "https://alcha.org"
+  },
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "package": "tsc",
     "prepublishOnly": "tsc",
@@ -15,9 +21,9 @@
     "koa-router",
     "koa-middleware"
   ],
-  "files": ["./dist"],
-  "author": "4lch4",
-  "license": "GPL-3.0-or-later",
+  "files": [
+    "./dist"
+  ],
   "dependencies": {
     "@koa/router": "^10.0.0",
     "chalk": "^4.1.1",
