@@ -7,7 +7,7 @@ const AppDefaults: AppOpts = {
   displayPrefix: true
 }
 
-class Processor {
+export class Processor {
   private opts: AppOpts
   private app: Koa
 
