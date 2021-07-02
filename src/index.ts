@@ -35,7 +35,7 @@ class Processor {
         routesInfo.push({
           path: member.path.substring(prefix.length),
           methods: this.getRouteMethods(member)
-          
+
         })
       }
     }
@@ -60,14 +60,15 @@ function printRoutes(app: Koa, opts?: AppOpts) {
   if (middleware) {
     const routes = processor.getRoutesInfo(middleware)
     const table = new Table({
-      head: ['Path', 'Method(s)']
+      head: ['Path', 'Method(s)'],
+      colAligns: ['left', 'center']
     })
 
     for (const { methods, path } of routes) {
-      table.push([path, methods.join('-- ')])
+      table.push([path, methods.join(' -- ')])
     }
 
-    console.log(table.toString())
+    console.log(`\n${table.toString()}\n`)
   } else {
     console.log(
       'No router middleware was located. Make sure this function is called _after_ you add your routes.'
