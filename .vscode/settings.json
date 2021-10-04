@@ -1,0 +1,24 @@
+{
+  "grammarly.overrides": [
+    {
+      "files": [
+        "**/koa-router-printer/README.md"
+      ],
+      "config": {
+        "audience": "knowledgeable",
+        "dialect": "american",
+        "domain": "technical",
+        "emotions": [
+          "neutral",
+          "confident",
+          "respectful",
+          "friendly"
+        ],
+        "goals": [
+          "inform",
+          "describe"
+        ]
+      }
+    }
+  ]
+}
