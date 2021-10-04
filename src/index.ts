@@ -43,29 +43,33 @@ export class Processor {
     return routesInfo
   }
 
-  getRouterMiddleware(): IRouter | undefined {
+  getRouterMiddleware(): IRouter[] {
+    const routerMiddleware = []
     for (const mw of this.app.middleware) {
-      // @ts-ignore if using the @koa/router package, this will be present on at
-      // least one piece of middleware.
-      if (mw.router) return mw.router
+      // @ts-ignore if using the @koa/router package with at least one route,
+      // this will be present on at least one piece of middleware.
+      if (mw.router) routerMiddleware.push(mw.router)
     }
 
-    return undefined
+    return routerMiddleware
   }
 }
 
 function printRoutes(app: Koa, opts?: AppOpts) {
   const processor = new Processor(app, opts)
-  const middleware = processor.getRouterMiddleware()
-  if (middleware) {
-    const routes = processor.getRoutesInfo(middleware)
+  const middlewareArray = processor.getRouterMiddleware()
+  if (middlewareArray.length > 0) {
     const table = new Table({
       head: ['Path', 'Method(s)'],
       colAligns: ['left', 'center']
     })
 
-    for (const { methods, path } of routes) {
-      table.push([path, methods.join(' -- ')])
+    for (const middleware of middlewareArray) {
+      const routes = processor.getRoutesInfo(middleware)
+
+      for (const { methods, path } of routes) {
+        table.push([path, methods.join(' -- ')])
+      }
     }
 
     console.log(`\n${table.toString()}\n`)
