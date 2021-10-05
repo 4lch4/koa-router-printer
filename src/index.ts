@@ -1,10 +1,13 @@
+import chalk from 'chalk'
 import Table from 'cli-table3'
 import Koa from 'koa'
 import { AppOpts, IRouter, IStack, PathInfo } from './interfaces'
 
 const AppDefaults: AppOpts = {
   displayHead: false,
-  displayPrefix: true
+  displayPrefix: true,
+  colors: true,
+  delimiter: ' -- '
 }
 
 export class Processor {
@@ -21,6 +24,33 @@ export class Processor {
     else return route.methods.filter(val => val !== 'HEAD')
   }
 
+  colorMethods(methods: string[]): string[] {
+    const coloredMethods: string[] = []
+
+    for (const method of methods) {
+      switch (method) {
+        case 'GET':
+          coloredMethods.push(chalk.green(method))
+          break
+
+        case 'POST':
+        case 'PUT':
+        case 'PATCH':
+          coloredMethods.push(chalk.yellow(method))
+          break
+
+        case 'DELETE':
+          coloredMethods.push(chalk.red(method))
+          break
+
+        default:
+          coloredMethods.push(method)
+      }
+    }
+
+    return coloredMethods
+  }
+
   getRoutesInfo(middleware: IRouter) {
     const { prefix } = middleware.opts
     const routesInfo: PathInfo[] = []
@@ -35,7 +65,6 @@ export class Processor {
         routesInfo.push({
           path: member.path.substring(prefix.length),
           methods: this.getRouteMethods(member)
-
         })
       }
     }
@@ -53,9 +82,18 @@ export class Processor {
 
     return routerMiddleware
   }
+
+  getRouteRow({ methods, path }: PathInfo): string[] {
+    return [
+      path,
+      this.opts.colors
+        ? this.colorMethods(methods).join(this.opts.delimiter)
+        : methods.join(this.opts.delimiter)
+    ]
+  }
 }
 
-export function printRoutes(app: Koa, opts?: AppOpts) {
+export function printRoutes(app: Koa, opts: AppOpts = AppDefaults) {
   const processor = new Processor(app, opts)
   const middlewareArray = processor.getRouterMiddleware()
   if (middlewareArray.length > 0) {
@@ -67,9 +105,7 @@ export function printRoutes(app: Koa, opts?: AppOpts) {
     for (const middleware of middlewareArray) {
       const routes = processor.getRoutesInfo(middleware)
 
-      for (const { methods, path } of routes) {
-        table.push([path, methods.join(' -- ')])
-      }
+      for (const route of routes) table.push(processor.getRouteRow(route))
     }
 
     console.log(`\n${table.toString()}\n`)
