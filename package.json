@@ -20,9 +20,6 @@
     "koa-router",
     "koa-middleware"
   ],
-  "files": [
-    "./dist"
-  ],
   "dependencies": {
     "@4lch4/koa-oto": "1.3.0",
     "@koa/router": "^10.1.1",

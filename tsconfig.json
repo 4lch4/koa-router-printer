@@ -66,4 +66,7 @@
   },
   "exclude": ["examples/**", "node_modules/**", "dist/**"],
   "include": ["src/**/*.ts"],
+  "typeAcquisition": {
+    "enable": true
+  }
 }
