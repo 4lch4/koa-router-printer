@@ -93,7 +93,9 @@ export class Processor {
   }
 }
 
-export function printRoutes(app: Koa, opts: AppOpts = AppDefaults) {
+export function printRoutes(app: Koa, opts?: AppOpts) {
+  if (opts) opts = { ...AppDefaults, ...opts }
+
   const processor = new Processor(app, opts)
   const middlewareArray = processor.getRouterMiddleware()
   if (middlewareArray.length > 0) {
