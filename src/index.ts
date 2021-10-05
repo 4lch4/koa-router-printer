@@ -6,7 +6,6 @@ import { AppOpts, IRouter, IStack, PathInfo } from './interfaces'
 const AppDefaults: AppOpts = {
   displayHead: false,
   displayPrefix: true,
-  colors: true,
   delimiter: ' -- '
 }
 
@@ -84,12 +83,7 @@ export class Processor {
   }
 
   getRouteRow({ methods, path }: PathInfo): string[] {
-    return [
-      path,
-      this.opts.colors
-        ? this.colorMethods(methods).join(this.opts.delimiter)
-        : methods.join(this.opts.delimiter)
-    ]
+    return [path, methods.join(this.opts.delimiter)]
   }
 }
 
