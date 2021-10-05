@@ -1,4 +1,4 @@
 export interface AppOpts {
-  displayPrefix: boolean
-  displayHead: boolean
+  displayPrefix?: boolean
+  displayHead?: boolean
 }
