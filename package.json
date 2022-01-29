@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.22",
     "@types/koa": "^2.13.4",
-    "@types/koa__router": "^8.0.8",
+    "@types/koa__router": "^8.0.11",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.10.2",
     "chai": "^4.3.4",
