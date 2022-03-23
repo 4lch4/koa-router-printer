@@ -8,7 +8,7 @@
     "email": "hey@4lch4.email",
     "url": "https://alcha.org"
   },
-  "license": "GPL-3.0-or-later",
+  "license": "MIT",
   "scripts": {
     "package": "tsc",
     "test": "mocha -r ts-node/register src/**/*.spec.ts"
