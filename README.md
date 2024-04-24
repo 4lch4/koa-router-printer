@@ -1,3 +1,9 @@
+> [!IMPORTANT]
+> This repo has been archived as I've switched to [Elysia][0] for my preferred API framework.
+>
+> Feel free to fork and modify this repo to suit your needs.
+
+
 # @4lch4/koa-router-printer
 
 This repo is a lightweight utility for Koa.js applications that utilize @koa/router. It outputs a two-column table containing the registered path(s) and method(s).
@@ -36,3 +42,5 @@ The module accepts two options along with the app parameter:
   - Whether or not to display the HEAD method with a path.
 - `displayPrefix`
   - Whether or not to display the prefix ahead of each Route path.
+
+[0]: https://elysiajs.com
